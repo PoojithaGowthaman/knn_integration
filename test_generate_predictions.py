@@ -8,6 +8,19 @@ from sklearn.neighbors import KNeighborsClassifier
 class test_generate_predictions(unittest.TestCase):
 
     def setUp(self):
+        # "Train" models before each test
+        # KNN regressor
+        self.knn_regressor.load_csv('datasets/auto_mpg.csv','mpg')
+        self.knn_regressor.train_test_split()
+        # KNN classifier
+        self.knn_classifier.load_csv('datasets/iris.csv','Species')
+        self.knn_classifier.train_test_split()
+        # Sklearn models (to compare against)
+        self.sklearn_regressor.fit(self.knn_regressor.x,self.knn_regressor.y)
+        self.sklearn_classifier.fit(self.knn_classifier.x,self.knn_classifier.y)
+
+    @classmethod
+    def setUpClass(self):
         # Create example observations for auto_mpg dataset
         self.reg_obs1=[4,97,46,1835,20.5]
         self.reg_obs2=[8,318,210,4382,13.5]
@@ -17,24 +30,16 @@ class test_generate_predictions(unittest.TestCase):
         self.clf_obs2=[7.2,3,5.8,1.6]
         self.clf_obs3=[-5.2,-3.4,-1.4,-0.2]
 
-    @classmethod
-    def setUpClass(self):
         # Create KNN regressor, load CSV, perform train/test split
         self.knn_regressor=knn.KNN('regressor')
-        self.knn_regressor.load_csv('datasets/auto_mpg.csv','mpg')
-        self.knn_regressor.train_test_split()
         # Create KNN classifier, load CSV, perform train/test split
-        self.knn_classifier=knn.KNN('classifier')
-        self.knn_classifier.load_csv('datasets/iris.csv','Species')
-        self.knn_classifier.train_test_split()
+        self.knn_classifier=knn.KNN('classifier',4)
 
         # Compare our model's predictions with sklearn's KNN implementation
         # Set up and fit sklearn KNN regressor
         self.sklearn_regressor=KNeighborsRegressor(n_neighbors=3)
-        self.sklearn_regressor.fit(self.knn_regressor.x,self.knn_regressor.y)
         # Set up and fit sklearn KNN classifier
-        self.sklearn_classifier=KNeighborsClassifier(n_neighbors=3)
-        self.sklearn_classifier.fit(self.knn_classifier.x,self.knn_classifier.y)
+        self.sklearn_classifier=KNeighborsClassifier(n_neighbors=4)
 
     def test_euclidean_distance(self):
         # Check if euclidean distance formula is implemented correctly
@@ -73,8 +78,25 @@ class test_generate_predictions(unittest.TestCase):
         knn_clf_obs2_pred=gp.generate_prediction(self.knn_classifier,self.clf_obs2,'all')
         self.assertEqual(knn_clf_obs2_pred,sklearn_clf_obs2_pred)
 
+    def test_generate_predictions(self):
+        # Test KNN regressor multiple predictions against sklearn regressor predictions
+        reg_obs=np.array([self.reg_obs1,self.reg_obs2,self.reg_obs3])
+        knn_reg_preds=gp.generate_predictions(self.knn_regressor,reg_obs,'all')
+        sklearn_reg_preds=self.sklearn_regressor.predict(reg_obs)
+        self.assertTrue(np.mean(knn_reg_preds==sklearn_reg_preds))
+        # Check that length of inputted observations and results match
+        self.assertEqual(len(reg_obs),len(knn_reg_preds))
+
+        # Test KNN classifier multiple predictions against sklearn classifier predictions
+        clf_obs=np.array([self.clf_obs1,self.clf_obs2,self.clf_obs3])
+        knn_clf_preds=gp.generate_predictions(self.knn_classifier,clf_obs,'all')
+        sklearn_clf_preds=self.sklearn_classifier.predict(clf_obs)
+        self.assertTrue(np.mean(knn_clf_preds==sklearn_clf_preds))
+        # Check that length of inputted observations and results match
+        self.assertEqual(len(clf_obs),len(knn_clf_preds))
+
     def tearDown(self):
         print('Tests successfully completed.')
-
+    @classmethod
     def tearDownClass(self):
         print('Class torn down.')

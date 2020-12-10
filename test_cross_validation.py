@@ -7,13 +7,14 @@ import numpy as np
 class test_cross_validation(unittest.TestCase):
 
     def setUp(self):
-        self.k_values=[2,3,4,6,10,20]
         # Perform cross validation before each test
         self.knn_cv_regressor.perform_cv(self.k_values)
         self.knn_cv_classifier.perform_cv(self.k_values)
 
     @classmethod
     def setUpClass(self):
+        # Set example k values
+        self.k_values=[2,3,4,6,10,20]
         # Create KNN regressor, load CSV, perform train/test split
         self.knn_cv_regressor=cv.CvKNN('regressor')
         self.knn_cv_regressor.load_csv('datasets/auto_mpg.csv','mpg')
@@ -72,13 +73,15 @@ class test_cross_validation(unittest.TestCase):
 def test_get_best_k(self):
         # Check that value returned by get_best_k has the lowest associated value in result
         self.knn_cv_regressor.get_best_k()
-        min_result=np.min(self.knn_cv_regressor._CvKNN__k_results)
-        min_position=self.knn_cv_regressor._CvKNN__k_results.index(min_result)
-        true_best_k=self.k_values[min_position]
-        self.assertEqual(self.knn_cv_regressor.k,true_best_k)
+        min_result_reg=np.min(self.knn_cv_regressor._CvKNN__k_results)
+        min_position_reg=self.knn_cv_regressor._CvKNN__k_results.index(min_result)
+        true_best_k_reg=self.k_values[min_position_reg]
+        self.assertEqual(self.knn_cv_regressor.k,true_best_k_reg)
+        self.assertEqual(self.knn_cv_regressor.best_k,true_best_k_reg)
 
         self.knn_cv_classifier.get_best_k()
-        min_result=np.min(self.knn_cv_classifier._CvKNN__k_results)
-        min_position=self.knn_cv_classifier._CvKNN__k_results.index(min_result)
-        true_best_k=self.k_values[min_position]
-        self.assertEqual(self.knn_cv_classifier.k,true_best_k)
+        min_result_clf=np.min(self.knn_cv_classifier._CvKNN__k_results)
+        min_position_clf=self.knn_cv_classifier._CvKNN__k_results.index(min_result_clf)
+        true_best_k_clf=self.k_values[min_position_clf]
+        self.assertEqual(self.knn_cv_classifier.k,true_best_k_clf)
+        self.assertEqual(self.knn_cv_classifier.best_k,true_best_k_clf)
