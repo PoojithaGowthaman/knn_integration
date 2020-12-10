@@ -71,18 +71,18 @@ class test_cross_validation(unittest.TestCase):
         self.assertIn('Misclassification',plot_ylab_clf.split(' '))
 
     def test_get_best_k(self):
-            # Check that value returned by get_best_k has the lowest associated value in result
-            self.knn_cv_regressor.get_best_k()
-            min_result_reg=np.min(self.knn_cv_regressor._CvKNN__k_results)
-            min_position_reg=self.knn_cv_regressor._CvKNN__k_results.index(min_result_reg)
-            true_best_k_reg=self.k_values[min_position_reg]
-            self.assertEqual(self.knn_cv_regressor.k,true_best_k_reg)
-            self.assertEqual(self.knn_cv_regressor.best_k,true_best_k_reg)
+        # Check that value returned by get_best_k has the lowest associated value in result
+        self.knn_cv_regressor.get_best_k()
+        min_result_reg=np.min(self.knn_cv_regressor._CvKNN__k_results)
+        min_position_reg=self.knn_cv_regressor._CvKNN__k_results.index(min_result_reg)
+        true_best_k_reg=self.k_values[min_position_reg]
+        self.assertEqual(self.knn_cv_regressor.k,true_best_k_reg)
+        self.assertEqual(self.knn_cv_regressor.best_k,true_best_k_reg)
 
-            self.knn_cv_classifier.get_best_k()
-            min_result_clf=np.min(self.knn_cv_classifier._CvKNN__k_results)
-            min_position_clf=self.knn_cv_classifier._CvKNN__k_results.index(min_result_clf)
-            true_best_k_clf=self.k_values[min_position_clf]
-            self.assertEqual(self.knn_cv_classifier.k,true_best_k_clf)
-            self.assertEqual(self.knn_cv_classifier.best_k,true_best_k_clf)
+        self.knn_cv_classifier.get_best_k()
+        min_result_clf=np.min(self.knn_cv_classifier._CvKNN__k_results)
+        min_position_clf=self.knn_cv_classifier._CvKNN__k_results.index(min_result_clf)
+        true_best_k_clf=self.k_values[min_position_clf]
+        self.assertEqual(self.knn_cv_classifier.k,true_best_k_clf)
+        self.assertEqual(self.knn_cv_classifier.best_k,true_best_k_clf)
 #def
