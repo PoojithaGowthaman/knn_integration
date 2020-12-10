@@ -3,6 +3,7 @@ from KNN.modelling import generate_predictions as gp
 from KNN.modelling import KNN_data_collection as knn
 from KNN.assessment import cross_validation as cv
 import numpy as np
+import matplotlib.pyplot as plt
 
 class test_cross_validation(unittest.TestCase):
 
@@ -53,7 +54,6 @@ class test_cross_validation(unittest.TestCase):
         plot_ylab_reg=cv_results_reg.get_ylabel()
         self.assertIn('MSE',plot_ylab_reg.split(' '))
 
-
         # Classifier
         # Check points on plot returned by get_cv_results function (ensure they match with k_values and k_results attributes and are on correct axis)
         cv_results_clf=self.knn_cv_classifier.get_cv_results()
@@ -85,4 +85,12 @@ class test_cross_validation(unittest.TestCase):
         true_best_k_clf=self.k_values[min_position_clf]
         self.assertEqual(self.knn_cv_classifier.k,true_best_k_clf)
         self.assertEqual(self.knn_cv_classifier.best_k,true_best_k_clf)
-#def
+
+    def tearDown(self):
+        print('Test complete.')
+        # Close plots
+        plt.close('all')
+
+    @classmethod
+    def tearDownClass(self):
+        print('All tests complete. Nothing to tear down.')
