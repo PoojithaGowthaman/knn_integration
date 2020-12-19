@@ -7,6 +7,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+class CvNotPerformed(Exception):
+    pass
+class TooManyFolds(Exception):
+    def __init__(self,num_folds,num_samples):
+        self.num_folds=num_folds
+        self.num_samples=num_samples
+    def __str__(self):
+        return 'Number of folds must be less than or equal to number of samples in training set. '+str(self.num_folds)+'-fold CV requested, but only '+str(self.num_samples)+' samples exist in training set.'
+
 class CvKNN(KNN_module.KNN):
     def __init__(self,model_type,num_folds=5):
         if model_type=='regressor' or model_type=='classifier':
@@ -29,8 +38,11 @@ class CvKNN(KNN_module.KNN):
         return np.apply_along_axis(lambda x:self.generate_cv_prediction(x_train,y_train,x,k),1,x_test)
 
     def perform_cv(self,k_values):
-        fold_size=len(self.x_train)//self.num_folds
-        split_indices=np.arange(0,len(self.x_train)+1,fold_size)
+        try:
+            fold_size=len(self.x_train)//self.num_folds
+            split_indices=np.arange(0,len(self.x_train)+1,fold_size)
+        except ZeroDivisionError as e:
+            raise TooManyFolds(num_folds=self.num_folds,num_samples=self.x_train.shape[0])
         self.__k_results=[]
         self.__k_values=[]
         for k in k_values:
@@ -48,9 +60,14 @@ class CvKNN(KNN_module.KNN):
                 elif self.model_type=='classifier':
                     fold_results.append(model_misclassification(y_test,fold_predictions))
             self.__k_results.append(np.mean(fold_results))
-        print('Successfully performed '+str(self.num_folds)+' CV!')
+        print('Successfully performed '+str(self.num_folds)+' fold CV!')
 
     def get_cv_results(self):
+        try:
+            # Check if CV has been performed
+            self.__k_values
+        except AttributeError as e:
+            raise CvNotPerformed('Cross validation has not been performed. Run perform_cv function to access results')
         for i in range(len(self.__k_values)):
             print('k='+str(self.__k_values[i])+': '+str(self.__k_results[i]))
         fig,axs=plt.subplots()
@@ -65,6 +82,11 @@ class CvKNN(KNN_module.KNN):
         return axs
 
     def get_best_k(self):
+        try:
+            # Check if CV has been performed
+            self.__k_values
+        except AttributeError as e:
+            raise CvNotPerformed('Cross validation has not been performed. Run perform_cv function to get best k')
         min_position=np.argmin(self.__k_results)
         best_k=self.__k_values[min_position]
         self.best_k=best_k
