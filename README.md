@@ -1,4 +1,12 @@
 # knn
+
+### LAB 4 NOTE:
+#### Custom exceptions and try/except handling for `generate_predictions` and `cross_validation` modules was done by modifying the original "lab 2" code, NOT the lab 3 test functions (these can be found within the `KNN` folder of this repo). A demonstration of the added exception handling is provided in the `exception_examples.ipynb` file, and extra test cases were added to the lab 3 code in order to test the exception handling.
+
+#### Custom exceptions and try/except handling for `KNN_data_collection` and `model_metrics` modules was done by modifying the lab 3 test functions.
+
+# knn package
+
 #### Implementation of K nearest neighbors model in Python. Supports built-in tuning of k hyper-parameter using k-fold cross validation.
 
 #### Example usage can be found in the `example_usage.ipynb` notebook. Package is contained within the `KNN` directory.
