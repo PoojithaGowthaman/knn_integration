@@ -9,6 +9,7 @@ import seaborn as sns
 
 class CvNotPerformed(Exception):
     pass
+    
 class TooManyFolds(Exception):
     def __init__(self,num_folds,num_samples):
         self.num_folds=num_folds
