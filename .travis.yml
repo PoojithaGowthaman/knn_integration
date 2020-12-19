@@ -2,11 +2,14 @@ language: python
 python: 
   - "3.8"
 script: 
-  - python test_load_csv.py
-  - python test_train_split.py
-  - python test_regression_metrics.py
-  - python test_classification_metrics.py
-  - python cross_validation.py
-  - python generate_predictions.py 
   - python -m pip install coverage
+  - python -m pip install matplotlib
+  - python -m pip install seaborn
+  - python -m pip install sklearn
+  - python -m coverage run test_load_csv.py
+  - python -m coverage run test_train_split.py
+  - python -m coverage run test_regression_metrics.py
+  - python -m coverage run test_classification_metrics.py
+  - python -m coverage run test_cross_validation.py
+  - python -m coverage run test_generate_predictions.py
   - python -m coverage report
