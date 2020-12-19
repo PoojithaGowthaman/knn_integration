@@ -4,7 +4,7 @@ Version: 0.1
 Summary: Implementation of KNN model in Python. Includes built-in support for cross validation.
 Home-page: https://github.com/PoojithaGowthaman/knn_integration
 Author: Poojitha Gowthaman & Eric Phillips
-Author-email: pg.poojithagowthaman@gmail.com & ericphillips99@me.com
+Author-email: ericphillips99@me.com
 License: MIT
 Description: UNKNOWN
 Platform: UNKNOWN
