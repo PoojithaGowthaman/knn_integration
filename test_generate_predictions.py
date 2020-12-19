@@ -84,6 +84,10 @@ class test_generate_predictions(unittest.TestCase):
         knn_clf_obs2_pred=gp.generate_prediction(self.knn_classifier,self.clf_obs2,'all')
         self.assertEqual(knn_clf_obs2_pred,sklearn_clf_obs2_pred)
 
+        # Test generation with training data
+        self.assertIsNotNone(gp.generate_prediction(self.knn_classifier,self.clf_obs1,'train'))
+        self.assertIsNotNone(gp.generate_prediction(self.knn_regressor,self.reg_obs1,'train'))
+
     def test_generate_predictions(self):
         # Test KNN regressor multiple predictions against sklearn regressor predictions
         reg_obs=np.array([self.reg_obs1,self.reg_obs2,self.reg_obs3])
@@ -104,6 +108,18 @@ class test_generate_predictions(unittest.TestCase):
         self.assertTrue(np.mean(knn_clf_preds==sklearn_clf_preds))
         # Check that length of inputted observations and results match
         self.assertEqual(len(clf_obs),len(knn_clf_preds))
+
+        # Test generation with training data
+        self.assertIsNotNone(gp.generate_predictions(self.knn_classifier,clf_obs,'train'))
+        self.assertIsNotNone(gp.generate_predictions(self.knn_regressor,reg_obs,'all'))
+
+    ## Testing exception handling
+    def test_exceptions(self):
+        # Test InvalidNumPredictors exception
+        self.assertRaises(gp.InvalidNumPredictors,gp.generate_prediction,self.knn_classifier,np.array([1,2]),'all')
+
+        # Test InvalidSubset exception
+        self.assertRaises(gp.InvalidSubset,gp.generate_prediction,self.knn_classifier,np.array([1,2]),'bad_subset')
 
     def tearDown(self):
         print('Test complete. Nothing to tear down.')

@@ -86,6 +86,38 @@ class test_cross_validation(unittest.TestCase):
         self.assertEqual(self.knn_cv_classifier.k,true_best_k_clf)
         self.assertEqual(self.knn_cv_classifier.best_k,true_best_k_clf)
 
+    ## Testing exception handling
+    def test_bad_model_type(self):
+        self.assertRaises(ValueError,cv.CvKNN,'bad_model')
+
+    def test_too_many_folds(self):
+        bad_clf=cv.CvKNN('classifier',1000)
+        bad_clf.load_csv('datasets/iris.csv','Species')
+        bad_clf.train_test_split()
+
+        bad_regressor=cv.CvKNN('regressor',1000)
+        bad_regressor.load_csv('datasets/auto_mpg.csv','mpg')
+        bad_regressor.train_test_split()
+
+        # Check that proper exception is raised
+        self.assertRaises(cv.TooManyFolds,bad_clf.perform_cv,[1,2,3,4,5])
+        self.assertRaises(cv.TooManyFolds,bad_regressor.perform_cv,[1,2,3,4,5])
+
+    def test_cv_not_performed(self):
+        bad_clf=cv.CvKNN('classifier',1000)
+        bad_clf.load_csv('datasets/iris.csv','Species')
+        bad_clf.train_test_split()
+
+        bad_regressor=cv.CvKNN('regressor',1000)
+        bad_regressor.load_csv('datasets/auto_mpg.csv','mpg')
+        bad_regressor.train_test_split()
+
+        # Check that proper exception is raised
+        self.assertRaises(cv.CvNotPerformed,bad_clf.get_cv_results)
+        self.assertRaises(cv.CvNotPerformed,bad_regressor.get_cv_results)
+        self.assertRaises(cv.CvNotPerformed,bad_clf.get_best_k)
+        self.assertRaises(cv.CvNotPerformed,bad_regressor.get_best_k)
+
     def tearDown(self):
         print('Test complete.')
         # Close plots
