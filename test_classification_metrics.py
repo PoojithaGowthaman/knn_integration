@@ -31,7 +31,7 @@ class TestClassificationMetrics(unittest.TestCase):
         
         
         try:
-            TestClassificationMetrics.test_knn_classifier.load_csv('datasets/Iris.csv','Species')
+            TestClassificationMetrics.test_knn_classifier.load_csv('datasets/iris.csv','Species')
         except FileNotFoundError:
             print('Dataset not found, check datasets folder.')
         
@@ -103,4 +103,4 @@ class TestClassificationMetrics(unittest.TestCase):
               .format(TestClassificationMetrics.assert_accuracy,TestClassificationMetrics.assert_misclassify,
               TestClassificationMetrics.assert_num_correct, TestClassificationMetrics.assert_num_incorrect))
 
-unittest.main (argv =[''], verbosity=2, exit= False) 
+unittest.main (argv =[''], verbosity=2, exit= False)
