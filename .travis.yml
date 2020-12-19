@@ -6,7 +6,7 @@ script:
   - python test_train_split.py
   - python test_regression_metrics.py
   - python test_classification_metrics.py
-  - python KNN/assessment/cross_validation.py
-  - python KNN/modelling/generate_predictions.py 
+  - python cross_validation.py
+  - python generate_predictions.py 
   - python -m pip install coverage
   - python -m coverage report
