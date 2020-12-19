@@ -1,10 +1,10 @@
 Metadata-Version: 1.0
 Name: ubc-knn
-Version: 0.1
-Summary: Implementation of KNN model in Python. Includes built-in support for cross validation.
+Version: 0.11
+Summary: KNN model in Python
 Home-page: https://github.com/PoojithaGowthaman/knn_integration
 Author: Poojitha Gowthaman & Eric Phillips
 Author-email: ericphillips99@me.com
 License: MIT
-Description: UNKNOWN
+Description: Implementation of K nearest neighbors model in Python. Supports built-in tuning of k hyper-parameter using k-fold cross validation.
 Platform: UNKNOWN
