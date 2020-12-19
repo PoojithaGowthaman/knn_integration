@@ -1,12 +1,16 @@
 # knn
 
 ### LAB 4 NOTE:
-#### Custom exceptions and try/except handling for `generate_predictions` and `cross_validation` modules was done by modifying the original "lab 2" code, NOT the lab 3 test functions (these can be found within the `KNN` folder of this repo). A demonstration of the added exception handling is provided in the `exception_examples.ipynb` file, and extra test cases were added to the lab 3 code in order to test the exception handling.
+#### Custom exceptions and try/except handling for `generate_predictions` and `cross_validation` modules was done by modifying the original "lab 2" code, NOT the lab 3 test functions (these can be found within the `KNN` folder of this repo). A demonstration of the added exception handling is provided in the `exception_examples.ipynb` file, and extra test cases were added to the lab 3 code (test classes) in order to test the exception handling.
 
 **Coverage screenshot:**
 ![](coverage_screenshot_gp_cv.jpg)
 
-#### Custom exceptions and try/except handling for `KNN_data_collection` and `model_metrics` modules was done by modifying the lab 3 test functions.
+#### Custom exceptions and try/except handling for `KNN_data_collection` and `model_metrics` modules was done by modifying the lab 3 test functions. Exceptions were added to test_load_csv, test_classfication_metrics, test_regression_metrics and test_train_split. User defined exceptions were also included appropriately.
+
+**Coverage screenshot:**
+![](coverage_screenshot_data_collection.jpg)
+![](coverage_screenshot_modelling.jpg)
 
 # knn package
 
