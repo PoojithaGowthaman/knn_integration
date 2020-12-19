@@ -5,10 +5,11 @@ script:
   - python -m pip install coverage
   - python -m pip install matplotlib
   - python -m pip install seaborn
+  - python -m pip install sklearn
   - python -m coverage run test_load_csv.py
   - python -m coverage run test_train_split.py
   - python -m coverage run test_regression_metrics.py
   - python -m coverage run test_classification_metrics.py
-  - python -m coverage run cross_validation.py
-  - python -m coverage run generate_predictions.py
+  - python -m coverage run test_cross_validation.py
+  - python -m coverage run test_generate_predictions.py
   - python -m coverage report
