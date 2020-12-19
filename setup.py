@@ -8,5 +8,5 @@ setup(
     description='Implementation of KNN model in Python. Includes built-in support for cross validation.',
     url='https://github.com/PoojithaGowthaman/knn_integration',
     author='Poojitha Gowthaman & Eric Phillips',
-    author_email='pg.poojithagowthaman@gmail.com & ericphillips99@me.com'
+    author_email='ericphillips99@me.com'
 )
