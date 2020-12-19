@@ -1,6 +1,6 @@
 from KNN.modelling import KNN_data_collection as KNN_module
 from KNN.modelling import generate_predictions as gp
-from .model_metrics import *
+from KNN.assessment import model_metrics
 
 import numpy as np
 import matplotlib.pyplot as plt
